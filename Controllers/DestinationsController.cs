@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TravelAPI.Models;
@@ -60,7 +61,8 @@ namespace TravelAPI.Controllers
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] Destination destination)
     {
-      destination.DestinationId = id;
+      destination.Reviews = _db.Review.Where(review => review.DestinationId == id).ToList();
+      destination.Rating = (destination.Reviews.Sum(dest => Convert.ToInt32(dest.Rating))/destination.Reviews.Count);
       _db.Entry(destination).State = EntityState.Modified;
       _db.SaveChanges();
     }
