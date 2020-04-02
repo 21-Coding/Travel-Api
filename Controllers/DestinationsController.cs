@@ -62,9 +62,11 @@ namespace TravelAPI.Controllers
     public void Put(int id, [FromBody] Destination destination)
     {
       destination.Reviews = _db.Review.Where(review => review.DestinationId == id).ToList();
-      destination.Rating = (destination.Reviews.Sum(dest => Convert.ToInt32(dest.Rating))/destination.Reviews.Count);
       _db.Entry(destination).State = EntityState.Modified;
       _db.SaveChanges();
+      // destination.Rating = (destination.Reviews.Sum(dest => Convert.ToInt32(dest.Rating))/destination.Reviews.Count);
+      // _db.Entry(destination).State = EntityState.Modified;
+      // _db.SaveChanges();
     }
 
     // DELETE api/destinations/5
@@ -72,6 +74,13 @@ namespace TravelAPI.Controllers
     public void Delete(int id)
     {
       var destinationToDelete = _db.Destination.FirstOrDefault(entry => entry.DestinationId == id);
+      Console.WriteLine("----");
+      Console.WriteLine("----");
+      Console.WriteLine("----");
+      Console.WriteLine(destinationToDelete.City);
+      Console.WriteLine("----");
+      Console.WriteLine("----");
+      Console.WriteLine("----");
       _db.Destination.Remove(destinationToDelete);
       _db.SaveChanges();
     }  

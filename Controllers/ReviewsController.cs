@@ -58,14 +58,14 @@ namespace TravelAPI.Controllers
 
     // PUT api/reviews/5
     [HttpPut("{id}")]
-    public void Put(string user, int id, [FromBody] Review review)
+    public void Put(int id, [FromBody] Review review)
     {
       review.ReviewId = id;
-      if (review.user_name == user)
-      {
+      // if (review.user_name == user)
+      // {
       _db.Entry(review).State = EntityState.Modified;
       _db.SaveChanges();
-      }
+      // }
     }
 
     // DELETE api/reviews/5
